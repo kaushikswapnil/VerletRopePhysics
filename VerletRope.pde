@@ -30,7 +30,8 @@ class VerletRope
  void Update()
  {
    PVector grav = new PVector(0, 10.0f);
-   float dragFactor = 0.99f;
+   float dragFactor = 0.90f;
+   float dt = 1.0f/frameRate;
    
    for (VerletPoint point : m_Points)
    {
@@ -75,7 +76,7 @@ class VerletRope
    }
    
    //Constrain points
-   int stiffness = m_Points.size()  * 3;
+   int stiffness = (int)(m_Points.size()  * 100.0f);
    
    for (int iter = 0; iter < stiffness; ++iter)
    {

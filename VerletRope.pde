@@ -32,17 +32,24 @@ class VerletRope
    PVector grav = new PVector(0, 10.0f);
    float dragFactor = 0.90f;
    float dt = 1.0f/frameRate;
-   
-   for (VerletPoint point : m_Points)
+   for (int iter = 0; iter < m_Points.size(); ++iter)
+   //for (VerletPoint point : m_Points)
    {
-     
+     VerletPoint point = m_Points.get(iter);
      if (point.m_Fixed == false)
      {
        PVector curVel = PVector.mult(PVector.sub(point.m_Pos, point.m_PrevPos), dragFactor);
 
        point.m_PrevPos = point.m_Pos.copy();
        point.m_Pos.add(curVel);
-       point.m_Pos.add(grav);
+       if (iter > m_CPWithPendulum)
+       {
+         point.m_Pos.add(PVector.mult(grav, 0.1f));
+       }
+       else
+       {
+         point.m_Pos.add(grav);
+       }       
      }
    }
    
